@@ -21,7 +21,7 @@ const schema = Type.Object({
   POSTGRES_DB: Type.String(),
   LOG_LEVEL: Type.Enum(LogLevel),
   NODE_ENV: Type.Enum(NodeEnv),
-  HOST: Type.String({ default: 'localhost' }),
+  HOST: Type.String({ default: '0.0.0.0' }),
   PORT: Type.Number({ default: 3000 }),
   JWT_SECRET: Type.String(),
   JWT_EXPIRES_IN: Type.String({ default: '1h' }),

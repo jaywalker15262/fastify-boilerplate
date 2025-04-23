@@ -42,7 +42,7 @@ async function init() {
   });
 
   try {
-    await fastify.listen({ port: env.server.port });
+    await fastify.listen({ port: env.server.port, host: env.server.host });
     gracefulServer.setReady();
   } catch (error) {
     fastify.log.error(error);
