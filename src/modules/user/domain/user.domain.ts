@@ -1,10 +1,16 @@
-import { CreateUserProps, UserEntity, UserRoles } from '@/modules/user/domain/user.types';
-import { randomUUID } from 'node:crypto';
+import {
+  CreateUserProps,
+  UserEntity,
+  UserRoles,
+} from '@/modules/user/domain/user.types';
 import bcrypt from 'bcrypt';
+import { randomUUID } from 'node:crypto';
 
 export default function userDomain() {
   return {
-    createUser: async (create: CreateUserProps & { password: string }): Promise<UserEntity> => {
+    createUser: async (
+      create: CreateUserProps & { password: string },
+    ): Promise<UserEntity> => {
       const now = new Date();
       const hashedPassword = await bcrypt.hash(create.password, 10); // 10 salt rounds
 
@@ -18,10 +24,14 @@ export default function userDomain() {
         postalCode: create.postalCode,
         street: create.street,
         role: UserRoles.guest,
+        isVerified: false,
       };
     },
 
-    validatePassword: async (user: UserEntity, password: string): Promise<boolean> => {
+    validatePassword: async (
+      user: UserEntity,
+      password: string,
+    ): Promise<boolean> => {
       return bcrypt.compare(password, user.password);
     },
   };

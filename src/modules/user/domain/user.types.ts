@@ -23,4 +23,5 @@ export interface UserEntity {
   role: UserRoles;
   createdAt: Date;
   updatedAt: Date;
+  isVerified: boolean;
 }

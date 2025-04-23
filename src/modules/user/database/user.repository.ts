@@ -12,6 +12,7 @@ export const userSchema = Type.Object({
   postalCode: Type.String({ minLength: 1, maxLength: 20 }),
   street: Type.String({ minLength: 1, maxLength: 255 }),
   role: Type.Enum(UserRoles),
+  isVerified: Type.Boolean(),
 });
 export type UserModel = Static<typeof userSchema>;
 
@@ -27,6 +28,6 @@ export default function userRepository({
       const [user]: [UserModel?] =
         await db`SELECT * FROM "users" WHERE email = ${email} LIMIT 1`;
       return user ? userMapper.toDomain(user) : undefined;
-    }    
+    },
   };
 }

@@ -23,11 +23,12 @@ export default function userMapper(): Mapper<
         street: record.street,
         postalCode: record.postalCode,
         country: record.country,
+        isVerified: record.isVerified,
       };
     },
     toResponse(entity: UserEntity): UserResponseDto {
       const {
-        password, // Strip this out
+        password: _password, // Strip this out
         ...safeData
       } = entity;
 
@@ -48,6 +49,7 @@ export default function userMapper(): Mapper<
         postalCode: user.postalCode,
         street: user.street,
         role: user.role,
+        isVerified: user.isVerified,
       };
       const validate = persistenceValidator(record);
       if (!validate) {

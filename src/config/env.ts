@@ -26,6 +26,7 @@ const schema = Type.Object({
   JWT_SECRET: Type.String(),
   JWT_EXPIRES_IN: Type.String({ default: '1h' }),
   JWT_REFRESH_EXPIRES_IN: Type.String({ default: '7d' }),
+  APP_URL: Type.String(),
 });
 
 const env = envSchema<Static<typeof schema>>({
@@ -53,4 +54,5 @@ export default {
     expiresIn: env.JWT_EXPIRES_IN,
     refreshExpiresIn: env.JWT_REFRESH_EXPIRES_IN,
   },
+  appUrl: env.APP_URL,
 };

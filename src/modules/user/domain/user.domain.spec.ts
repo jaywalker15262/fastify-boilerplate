@@ -14,6 +14,7 @@ describe('userDomain()', () => {
     });
 
     assert.equal(user.role, UserRoles.guest);
+    assert.strictEqual(user.isVerified, false);
     assert.ok(user.password); // ensure password is hashed
     assert.notEqual(user.password, 'securepassword123'); // should be hashed, not raw
   });

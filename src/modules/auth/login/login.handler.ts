@@ -1,7 +1,7 @@
 // src/modules/auth/login/login.handler.ts
+import { authActionCreator } from '../index';
 import { signAccessToken, signRefreshToken } from '../token';
 import { Unauthorized } from '@/shared/exceptions';
-import { authActionCreator } from '../index';
 import bcrypt from 'bcrypt';
 
 export type LoginCommandPayload = {
@@ -16,20 +16,37 @@ export type LoginCommandResult = {
 
 export const loginCommand = authActionCreator<LoginCommandPayload>('login');
 
-export default function makeLoginHandler({ userRepository, commandBus }: Dependencies) {
+export default function makeLoginHandler({
+  userRepository,
+  commandBus,
+}: Dependencies) {
   return {
-    async handler({ payload }: ReturnType<typeof loginCommand>): Promise<LoginCommandResult> {
+    async handler({
+      payload,
+    }: ReturnType<typeof loginCommand>): Promise<LoginCommandResult> {
       const user = await userRepository.findOneByEmail(payload.email);
+
       if (!user || !(await bcrypt.compare(payload.password, user.password))) {
         throw new Unauthorized('Invalid credentials');
       }
 
-      // Exclude password from payload
+      if (!user.isVerified) {
+        throw new Unauthorized(
+          'Email not verified — check your inbox for the verification link.',
+        );
+      }
+
       const { password: _, ...userSafe } = user;
 
       return {
-        accessToken: signAccessToken({ id: userSafe.id, email: userSafe.email }),
-        refreshToken: signRefreshToken({ id: userSafe.id, email: userSafe.email }),
+        accessToken: signAccessToken({
+          id: userSafe.id,
+          email: userSafe.email,
+        }),
+        refreshToken: signRefreshToken({
+          id: userSafe.id,
+          email: userSafe.email,
+        }),
       };
     },
 
