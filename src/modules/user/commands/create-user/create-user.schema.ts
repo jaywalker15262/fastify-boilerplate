@@ -12,7 +12,7 @@ export const createUserRequestDtoSchema = Type.Object({
     example: 'securePassword123',
     description: 'User password',
     minLength: 6,
-    maxLength: 100,
+    maxLength: 72,
   }),
   country: Type.String({
     example: 'France',

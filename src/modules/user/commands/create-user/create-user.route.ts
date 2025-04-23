@@ -11,12 +11,12 @@ export default async function createUser(fastify: FastifyRouteInstance) {
     method: 'POST',
     url: '/',
     schema: {
+      tags: ['users'],
       description: 'Create user',
       body: createUserRequestDtoSchema,
       response: {
-        200: idDtoSchema,
+        201: idDtoSchema,
       },
-      tags: ['users'],
     },
     handler: async (req, res) => {
       const id = await fastify.commandBus.execute<CreateUserCommandResult>(

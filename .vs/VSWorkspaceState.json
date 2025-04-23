@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\modules",
+    "\\src\\modules\\auth",
+    "\\src\\modules\\auth\\register"
+  ],
+  "SelectedNode": "\\src\\modules\\auth\\register\\register.schema.ts",
+  "PreviewInSolutionExplorer": false
+}
