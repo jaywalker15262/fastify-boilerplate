@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "create:env": "node -r fs -e \"fs.copyFileSync('.env.example', '.env', fs.constants.COPYFILE_EXCL)\"",
-    "start": "tsx watch src --env-file=.env | pino-pretty",
+    "start": "tsx watch src | pino-pretty",
     "start:prod": "node ./dist/index.js --env-file=.env",
     "build": "rm -rf ./dist && tsc --project tsconfig.build.json && resolve-tspaths -p tsconfig.build.json -s ./src -o ./dist",
     "test": "yarn test:unit",
