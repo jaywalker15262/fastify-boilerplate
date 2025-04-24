@@ -7,7 +7,7 @@ type VerifyEmailQuery = {
 
 export default async function verifyEmailRoute(server: FastifyInstance) {
   server.get(
-    '/verify-email',
+    '/',
     async (
       request: FastifyRequest<{ Querystring: VerifyEmailQuery }>,
       reply,
