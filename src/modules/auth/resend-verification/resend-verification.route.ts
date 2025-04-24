@@ -40,7 +40,7 @@ export default async function resendVerificationRoute(server: FastifyInstance) {
         SET token = EXCLUDED.token, expires_at = EXCLUDED.expires_at
       `;
 
-      const verifyUrl = `${env.appUrl}/api/verify-email?token=${token}`;
+      const verifyUrl = `${env.appUrl}/api/auth/verify-email?token=${token}`;
 
       await resend.emails.send({
         from: 'noreply@instaal.dev',
