@@ -7,7 +7,7 @@ import { randomBytes } from 'node:crypto';
 
 export default async function resendVerificationRoute(server: FastifyInstance) {
   server.post(
-    '/resend-verification',
+    '/',
     {
       config: {
         rateLimit: {
