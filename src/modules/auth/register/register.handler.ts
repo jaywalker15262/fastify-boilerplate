@@ -38,7 +38,7 @@ export function makeRegisterHandler({ sql, resend }: Dependencies) {
       VALUES (${id}, ${token}, ${expiresAt})
     `;
 
-    const verifyUrl = `${env.appUrl}/api/verify-email?token=${token}`;
+    const verifyUrl = `${env.appUrl}/api/auth/verify-email?token=${token}`;
 
     await resend.emails.send({
       from: 'noreply@instaal.dev',
