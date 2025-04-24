@@ -1,3 +1,4 @@
+// src/modules/auth/resend-verification/resend-verification.route.ts
 import env from '@/config/env';
 import sql from '@/shared/db/postgres';
 import { resend } from '@/shared/email/resend';
@@ -6,7 +7,7 @@ import { randomBytes } from 'node:crypto';
 
 export default async function resendVerificationRoute(server: FastifyInstance) {
   server.post(
-    '/',
+    '/resend-verification',
     {
       config: {
         rateLimit: {
@@ -15,20 +16,18 @@ export default async function resendVerificationRoute(server: FastifyInstance) {
         },
       },
     },
-    async (req, res) => {
-      const { email } = req.body as { email: string };
+    async (request, reply) => {
+      const { email } = request.body as { email: string };
 
       const [user] =
         await sql`SELECT id, "isVerified" FROM users WHERE email = ${email} LIMIT 1`;
 
       if (!user) {
-        return res
-          .status(400)
-          .send({ error: 'No user found with this email.' });
+        return reply.status(404).send({ error: 'User not found' });
       }
 
       if (user.isVerified) {
-        return res.status(400).send({ error: 'Email already verified.' });
+        return reply.status(400).send({ error: 'Email already verified' });
       }
 
       const token = randomBytes(32).toString('hex');
@@ -37,6 +36,8 @@ export default async function resendVerificationRoute(server: FastifyInstance) {
       await sql`
         INSERT INTO email_verification_tokens (user_id, token, expires_at)
         VALUES (${user.id}, ${token}, ${expiresAt})
+        ON CONFLICT (user_id) DO UPDATE
+        SET token = EXCLUDED.token, expires_at = EXCLUDED.expires_at
       `;
 
       const verifyUrl = `${env.appUrl}/api/verify-email?token=${token}`;
@@ -44,11 +45,11 @@ export default async function resendVerificationRoute(server: FastifyInstance) {
       await resend.emails.send({
         from: 'noreply@instaal.dev',
         to: email,
-        subject: 'Verify your email (again)',
-        html: `<p>Please verify your email again by clicking <a href="${verifyUrl}">here</a>.</p>`,
+        subject: 'Verify your email',
+        html: `<p>Please <a href="${verifyUrl}">verify your email</a> to activate your account.</p>`,
       });
 
-      return res.send({ message: 'Verification email sent.' });
+      return reply.send({ success: true });
     },
   );
 }
