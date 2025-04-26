@@ -42,6 +42,10 @@ export async function generateStack(
   const sharedEnding = `
 The alternative MAY include an additional field called "synergizes_with", which is an array of software names (e.g. "Notion (primary)", "Framer (alternative)") that work well with it. Leave it out if not needed.
 
+If a synergistic tool also exists in the "software_stack" (as a primary or alternative), you MAY add "(primary)" or "(alternative)" after its name accordingly.
+
+If the synergistic tool is not listed in the "software_stack", mention its name only — without any parentheses, labels, or annotations.
+
 Return a valid JSON object with this format:
 {
   "software_stack": [
