@@ -3,6 +3,11 @@ import { createUserCommand } from '@/modules/user/commands/create-user/create-us
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
+// 1) Stub global.fetch before anything else runs:
+(globalThis as any).fetch = async () => ({
+  json: async () => ({ success: true, score: 0.9 }),
+});
+
 const mockSql = async (..._: any[]) => {
   return [];
 };
@@ -25,11 +30,22 @@ test('registerHandler should create a user and return an ID', async () => {
     country: 'France',
     postalCode: '75000',
     street: 'Rue de Test',
+    recaptchaToken: 'dummy-token',
   };
 
   const mockCommandBus = {
     execute: async (cmd: any) => {
-      assert.deepEqual(cmd, createUserCommand(payload));
+      // ensure we strip recaptchaToken before passing to createUserCommand
+      assert.deepEqual(
+        cmd,
+        createUserCommand({
+          email: payload.email,
+          password: payload.password,
+          country: payload.country,
+          postalCode: payload.postalCode,
+          street: payload.street,
+        }),
+      );
       return 'mock-user-id';
     },
   };

@@ -5,6 +5,7 @@ import AutoLoad from '@fastify/autoload';
 import Cors from '@fastify/cors';
 import Helmet from '@fastify/helmet';
 import rateLimit from '@fastify/rate-limit';
+import sensible from '@fastify/sensible';
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import UnderPressure from '@fastify/under-pressure';
 import { FastifyInstance } from 'fastify';
@@ -18,6 +19,9 @@ export default async function createServer(fastify: FastifyInstance) {
     timeWindow: '1 minute',
     allowList: ['127.0.0.1'],
   });
+
+  // bring in fastify.httpErrors, httpCodes, etc.
+  await fastify.register(sensible);
 
   // Graphql
   await fastify.register(mercurius, {
