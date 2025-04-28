@@ -32,6 +32,9 @@ export function makeRegisterHandler({ sql, resend }: Dependencies) {
       throw fastify.httpErrors.badRequest('Missing reCAPTCHA token');
     }
 
+    console.log('[DEBUG] recaptchaToken received:', recaptchaToken);
+    console.log('[DEBUG] Using secret:', env.recaptchaSecretKey);
+
     // Verify with Google
     const resp = await fetch(
       `https://www.google.com/recaptcha/api/siteverify`,
@@ -44,6 +47,9 @@ export function makeRegisterHandler({ sql, resend }: Dependencies) {
         }),
       },
     );
+
+    console.log('[DEBUG] Recaptcha server response:', resp);
+
     const { success, score } = (await resp.json()) as {
       success: boolean;
       score: number;
