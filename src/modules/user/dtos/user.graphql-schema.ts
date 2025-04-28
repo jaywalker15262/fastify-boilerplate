@@ -1,8 +1,11 @@
-export const userBaseSchema = `
+/*export const userBaseSchema = `
     email: String!
     country: String!
     postalCode: String!
     street: String!
+`;*/
+export const userBaseSchema = `
+    email: String!
 `;
 
 const userSchema = `

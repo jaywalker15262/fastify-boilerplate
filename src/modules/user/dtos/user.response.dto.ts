@@ -9,7 +9,7 @@ export const userResponseDtoSchema = Type.Composite([
       format: 'email',
       description: "User's email address",
     }),
-    country: Type.String({
+    /*country: Type.String({
       example: 'France',
       description: "User's country of residence",
     }),
@@ -20,7 +20,7 @@ export const userResponseDtoSchema = Type.Composite([
     street: Type.String({
       example: 'Park Avenue',
       description: 'Street where the user is registered',
-    }),
+    }),*/
   }),
 ]);
 

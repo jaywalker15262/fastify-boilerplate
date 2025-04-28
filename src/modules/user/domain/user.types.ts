@@ -2,9 +2,9 @@
 export interface CreateUserProps {
   email: string;
   password: string;
-  country: string;
+  /*country: string;
   postalCode: string;
-  street: string;
+  street: string;*/
 }
 
 export enum UserRoles {
@@ -17,9 +17,9 @@ export interface UserEntity {
   id: string;
   email: string;
   password: string;
-  country: string;
+  /*country: string;
   postalCode: string;
-  street: string;
+  street: string;*/
   role: UserRoles;
   createdAt: Date;
   updatedAt: Date;

@@ -6,9 +6,9 @@ INSERT INTO
     "updatedAt",
     email,
     password,
-    country,
+    /*country,
     "postalCode",
-    street,
+    street,*/
     "role"
   )
 VALUES
@@ -18,9 +18,9 @@ VALUES
     now(),
     'john@gmail.com',
     '$2b$10$skytmxATFoiTYBqXxJrs/uMZ3mbiItKkcHM3A0X8QUf3Uq8sgaAse', -- "securePassword123"
-    'England',
+    /*'England',
     '24312',
-    'Road Avenue',
+    'Road Avenue',*/
     'guest'
   );
 

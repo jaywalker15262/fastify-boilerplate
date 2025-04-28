@@ -8,9 +8,9 @@ describe('userDomain()', () => {
     const user = await userDomain().createUser({
       email: 'test@test.it',
       password: 'securepassword123',
-      country: 'Italy',
+      /*country: 'Italy',
       postalCode: '12345',
-      street: 'Via Roma',
+      street: 'Via Roma',*/
     });
 
     assert.equal(user.role, UserRoles.guest);

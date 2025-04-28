@@ -8,9 +8,9 @@ export const userSchema = Type.Object({
   updatedAt: Type.String({ format: 'date-time' }),
   email: Type.String({ format: 'email' }),
   password: Type.String({ minLength: 6 }),
-  country: Type.String({ minLength: 1, maxLength: 255 }),
+  /*country: Type.String({ minLength: 1, maxLength: 255 }),
   postalCode: Type.String({ minLength: 1, maxLength: 20 }),
-  street: Type.String({ minLength: 1, maxLength: 255 }),
+  street: Type.String({ minLength: 1, maxLength: 255 }),*/
   role: Type.Enum(UserRoles),
   isVerified: Type.Boolean(),
 });

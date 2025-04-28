@@ -20,9 +20,9 @@ export default function userDomain() {
         updatedAt: now,
         email: create.email,
         password: hashedPassword,
-        country: create.country,
+        /*country: create.country,
         postalCode: create.postalCode,
-        street: create.street,
+        street: create.street,*/
         role: UserRoles.guest,
         isVerified: false,
       };

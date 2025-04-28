@@ -5,9 +5,9 @@ CREATE TABLE "users" (
   "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   "email" character varying NOT NULL,
   "password" TEXT NOT NULL,
-  "country" character varying NOT NULL,
+  /*"country" character varying NOT NULL,
   "postalCode" character varying NOT NULL,
-  "street" character varying NOT NULL,
+  "street" character varying NOT NULL,*/
   "role" character varying NOT NULL,
   "isVerified" BOOLEAN NOT NULL DEFAULT false,
   CONSTRAINT "UQ_e12875dfb3b1d92d7d7c5377e22" UNIQUE ("email"),

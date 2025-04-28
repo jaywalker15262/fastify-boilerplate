@@ -14,7 +14,7 @@ export const createUserRequestDtoSchema = Type.Object({
     minLength: 6,
     maxLength: 72,
   }),
-  country: Type.String({
+  /*country: Type.String({
     example: 'France',
     description: 'Country of residence',
     maxLength: 50,
@@ -31,7 +31,7 @@ export const createUserRequestDtoSchema = Type.Object({
     description: 'Street',
     maxLength: 50,
     minLength: 5,
-  }),
+  }),*/
 });
 
 export type CreateUserRequestDto = Static<typeof createUserRequestDtoSchema>;

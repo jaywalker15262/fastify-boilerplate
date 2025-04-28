@@ -20,9 +20,9 @@ export default function userMapper(): Mapper<
         email: record.email,
         password: record.password,
         role: record.role,
-        street: record.street,
+        /*street: record.street,
         postalCode: record.postalCode,
-        country: record.country,
+        country: record.country,*/
         isVerified: record.isVerified,
       };
     },
@@ -45,9 +45,9 @@ export default function userMapper(): Mapper<
         updatedAt: user.updatedAt.toISOString(),
         email: user.email,
         password: user.password,
-        country: user.country,
+        /*country: user.country,
         postalCode: user.postalCode,
-        street: user.street,
+        street: user.street,*/
         role: user.role,
         isVerified: user.isVerified,
       };
