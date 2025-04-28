@@ -48,15 +48,23 @@ export function makeRegisterHandler({ sql, resend }: Dependencies) {
       },
     );
 
-    console.log('[DEBUG] Recaptcha server response:', resp);
-
-    const { success, score } = (await resp.json()) as {
+    const respData = (await resp.json()) as {
       success: boolean;
-      score: number;
+      score?: number;
+      'error-codes'?: string[];
     };
+    console.log('[DEBUG] Recaptcha server verification response:', respData);
 
-    if (!success || score < 0.5) {
+    if (!respData.success) {
+      console.error(
+        '[DEBUG] Recaptcha failed with errors:',
+        respData['error-codes'],
+      );
       throw fastify.httpErrors.forbidden('reCAPTCHA verification failed');
+    }
+
+    if (respData.score !== undefined && respData.score < 0.5) {
+      throw fastify.httpErrors.forbidden('reCAPTCHA score too low');
     }
 
     // Create user
