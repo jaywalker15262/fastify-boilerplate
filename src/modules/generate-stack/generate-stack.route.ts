@@ -5,6 +5,7 @@ interface GenerateStackRequest {
   Body: {
     description: string;
     osInfo?: { platform: string; arch: string };
+    ignoreList?: string[];
   };
 }
 
@@ -37,10 +38,10 @@ export default async function generateStackRoute(fastify: FastifyInstance) {
       },
     },
     async (request, reply) => {
-      const { description, osInfo } = request.body;
+      const { description, osInfo, ignoreList } = request.body;
 
       try {
-        const resultJson = await generateStack(description, osInfo);
+        const resultJson = await generateStack(description, osInfo, ignoreList);
         const payload = JSON.parse(resultJson);
         return reply.code(200).send(payload);
       } catch (error: any) {

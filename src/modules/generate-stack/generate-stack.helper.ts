@@ -5,6 +5,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 export async function generateStack(
   description: string,
   osInfo?: { platform: string; arch: string },
+  ignoreList: string[] = [],
 ) {
   const today = new Date().toLocaleDateString('en-US', {
     year: 'numeric',
@@ -109,8 +110,13 @@ Each item in "software_stack" should represent one install step, and MUST includ
   - software_prerequisites (e.g. "Node.js", "Python", ".NET", "C++ Redistributables" — return "None" if not needed)
   - user_prerequisites (e.g. "Install VS Code extension", "Create GitHub account" — return "None" if not needed)${sharedEnding}`;
 
+  const ignoreLine =
+    ignoreList.length > 0
+      ? `Do NOT suggest the following tools: ${ignoreList.join(', ')}.\n\n`
+      : '';
+
   const osLine = osInfo
-    ? `The user is currently using: ${osInfo.platform} (${osInfo.arch}).\n`
+    ? `The user is currently using: ${osInfo.platform} (${osInfo.arch}).\n\n`
     : '';
 
   const userPrompt = `${osLine}Today's date is ${today}.
@@ -123,7 +129,7 @@ Use realistic, up-to-date system requirements consistent with the current ecosys
 
 Based on the following description, suggest tools or components:
 
-"${description}"`;
+"${description}"${ignoreLine}`;
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4.1',
