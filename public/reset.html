@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <script>
+      const token = new URLSearchParams(location.search).get('token');
+      if (token) {
+        window.location.href = `instaal://reset-password?token=${token}`;
+      } else {
+        document.body.textContent = "Invalid or missing token.";
+      }
+    </script>
+  </head>
+  <body>
+    Redirecting...
+  </body>
+</html>
