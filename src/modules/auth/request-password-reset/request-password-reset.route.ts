@@ -1,4 +1,3 @@
-import env from '@/config/env';
 import sql from '@/shared/db/postgres';
 import { resend } from '@/shared/email/resend';
 import { FastifyInstance } from 'fastify';
@@ -47,7 +46,7 @@ export default async function requestPasswordResetRoute(
         SET token = EXCLUDED.token, expires_at = EXCLUDED.expires_at
       `;
 
-      const resetUrl = `${env.appUrl}/#/reset-password?token=${token}`;
+      const resetUrl = `instaal://reset-password?token=${token}`;
 
       await resend.emails.send({
         from: 'noreply@instaal.dev',
