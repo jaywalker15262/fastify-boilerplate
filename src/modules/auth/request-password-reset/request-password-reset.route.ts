@@ -46,7 +46,7 @@ export default async function requestPasswordResetRoute(
         SET token = EXCLUDED.token, expires_at = EXCLUDED.expires_at
       `;
 
-      const resetUrl = `https://instaal.dev/redirect?token=${token}`;
+      const resetUrl = `https://instaal-backend.onrender.com/redirect?token=${token}`;
 
       await resend.emails.send({
         from: 'noreply@instaal.dev',
