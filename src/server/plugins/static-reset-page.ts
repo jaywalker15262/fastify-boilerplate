@@ -10,16 +10,6 @@ async function staticResetPagePlugin(fastify: FastifyInstance) {
     prefix: '/reset/',
     decorateReply: false,
   });
-
-  // Optional: Custom 404 only for /reset/ paths
-  fastify.setNotFoundHandler((request, reply) => {
-    if (request.raw.url?.startsWith('/reset/')) {
-      return reply.status(404).type('text/plain').send('Reset page not found');
-    }
-
-    // Let other handlers take care of unmatched routes
-    throw fastify.httpErrors.notFound();
-  });
 }
 
 export default fp(staticResetPagePlugin, {
