@@ -1,23 +1,27 @@
-import fastifyStatic from '@fastify/static';
 import { FastifyInstance } from 'fastify';
 import fp from 'fastify-plugin';
+import fs from 'node:fs/promises';
 import path from 'node:path';
 
-async function staticResetPagePlugin(fastify: FastifyInstance) {
-  // serve everything in /public at the root
-  fastify.register(fastifyStatic, {
-    root: path.join(__dirname, '../../public'),
-    prefix: '/',
-    decorateReply: true,
-  });
+export default fp(
+  async function resetPagePlugin(fastify: FastifyInstance) {
+    const publicDir = path.join(__dirname, '../../public');
 
-  // when someone hits /redirect?token=…, give them reset.html
-  fastify.get('/redirect', (_, reply) => {
-    // this will send public/reset.html
-    return reply.sendFile('reset.html');
-  });
-}
-
-export default fp(staticResetPagePlugin, {
-  name: 'staticResetPage',
-});
+    // Serve your reset.html on GET /redirect?token=…
+    fastify.get('/redirect', async (_, reply) => {
+      try {
+        const html = await fs.readFile(
+          path.join(publicDir, 'reset.html'),
+          'utf8',
+        );
+        reply.type('text/html').send(html);
+      } catch (error) {
+        fastify.log.error('Could not load reset.html:', error);
+        reply.internalServerError('Failed to load reset page');
+      }
+    });
+  },
+  {
+    name: 'resetPage',
+  },
+);
