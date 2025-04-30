@@ -4,11 +4,17 @@ import fp from 'fastify-plugin';
 import path from 'node:path';
 
 async function staticResetPagePlugin(fastify: FastifyInstance) {
-  // Serve static files from the /public/reset folder under the /reset path
+  // serve everything in /public at the root
   fastify.register(fastifyStatic, {
-    root: path.join(__dirname, '../../public/reset'),
-    prefix: '/reset/',
-    decorateReply: false,
+    root: path.join(__dirname, '../../public'),
+    prefix: '/',
+    decorateReply: true,
+  });
+
+  // when someone hits /redirect?token=…, give them reset.html
+  fastify.get('/redirect', (_, reply) => {
+    // this will send public/reset.html
+    return reply.sendFile('reset.html');
   });
 }
 
