@@ -22,6 +22,24 @@ declare global {
   >;
 }
 
+declare module 'fastify' {
+  interface FastifyInstance {
+    /**
+     * Verifies a Bearer JWT on the incoming request,
+     * and if valid attaches { id, email } to request.user
+     */
+    authenticate(request: FastifyRequest, reply: FastifyReply): Promise<void>;
+  }
+
+  interface FastifyRequest {
+    /** Set by authenticate() */
+    user?: {
+      id: string;
+      email: string;
+    };
+  }
+}
+
 // Strongly Type DI container
 declare module '@fastify/awilix' {
   interface Cradle extends Dependencies {}
