@@ -45,18 +45,18 @@ Do not suggest ad platforms, ad buying dashboards, or advertising networks (e.g.
 
 Only suggest tools, apps, or services that help the business operate, communicate, manage, create, analyze, or grow. This includes installable software and SaaS platforms with interactive features.
 
+The alternative MAY include an additional field called "synergizes_with", which is an array of software names (e.g. "Notion (primary)", "Framer (alternative)") that work well with it. Leave it out if not needed.
+
+If a synergistic tool also exists in the "software_stack" (as a primary or alternative), you MAY add "(primary)" or "(alternative)" after its name accordingly.
+
+If the synergistic tool is not listed in the "software_stack", mention its name only — without any parentheses, labels, or annotations.
+
 You must return software_name values using the most up-to-date and official brand or product name.
 Do not include old names, company names, slogans, or marketing phrases.
 Examples:
 - Use "Brevo", not "Brevo (formerly Sendinblue)"
 - Use "Google Analytics", not "GA" or "Universal Analytics"
 - Use "Adobe Creative Cloud", not "Adobe CC" or "Creative Suite"
-
-The alternative MAY include an additional field called "synergizes_with", which is an array of software names (e.g. "Notion (primary)", "Framer (alternative)") that work well with it. Leave it out if not needed.
-
-If a synergistic tool also exists in the "software_stack" (as a primary or alternative), you MAY add "(primary)" or "(alternative)" after its name accordingly.
-
-If the synergistic tool is not listed in the "software_stack", mention its name only — without any parentheses, labels, or annotations.
 
 Return a valid JSON object with this format:
 {
