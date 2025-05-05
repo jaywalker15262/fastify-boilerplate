@@ -41,6 +41,10 @@ export async function generateStack(
   );
 
   const sharedEnding = `
+Do not suggest ad platforms, ad buying dashboards, or advertising networks (e.g., Google Ads, Meta Ads Manager, Amazon Ads). These are not business tools.
+
+Only suggest tools, apps, or services that help the business operate, communicate, manage, create, analyze, or grow. This includes installable software and SaaS platforms with interactive features.
+
 You must return software_name values using the most up-to-date and official brand or product name.
 Do not include old names, company names, slogans, or marketing phrases.
 Examples:
