@@ -153,7 +153,7 @@ Based on the following description, suggest tools or components:
       { role: 'system', content: prompt },
       { role: 'user', content: userPrompt },
     ],
-    temperature: 0.7,
+    temperature: 0.6,
   });
 
   return response?.choices?.[0]?.message?.content || '';
