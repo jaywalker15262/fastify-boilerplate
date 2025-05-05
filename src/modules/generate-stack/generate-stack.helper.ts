@@ -43,7 +43,9 @@ export async function generateStack(
   const sharedEnding = `
 Do not suggest ad platforms, ad buying dashboards, or advertising networks (e.g., Google Ads, Meta Ads Manager, Amazon Ads). These are not business tools.
 
-Only suggest tools, apps, or services that help the business operate, communicate, manage, create, analyze, or grow. This includes installable software and SaaS platforms with interactive features.
+Only suggest tools, apps, libraries, or services that help the business or project operate, communicate, develop, manage, create, analyze, or grow. These may include installable software, SaaS platforms, SDKs, CLI tools, extensions, libraries, automation frameworks, or cloud services — as long as they provide practical utility or functionality that supports the business or project.
+
+Avoid generic or low-impact utilities (e.g., password managers, file sync tools, browser add-ons) unless the business type or project description makes them clearly relevant (e.g., security firm, compliance-heavy industry, or credential-sharing is essential).
 
 The alternative MAY include an additional field called "synergizes_with", which is an array of software names (e.g. "Notion (primary)", "Framer (alternative)") that work well with it. Leave it out if not needed.
 
