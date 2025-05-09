@@ -10,6 +10,8 @@ export default async function validateFallbackDownloadRoute(
       platform: string;
       fallbackUrl: string;
       referrer: string;
+      title: string;
+      snippet: string;
     };
   }>(
     '/',
@@ -23,17 +25,25 @@ export default async function validateFallbackDownloadRoute(
       schema: {
         body: {
           type: 'object',
-          required: ['softwareName', 'platform', 'fallbackUrl', 'referrer'],
+          required: [
+            'softwareName',
+            'platform',
+            'fallbackUrl',
+            'referrer',
+            'title',
+            'snippet',
+          ],
           properties: {
             softwareName: { type: 'string' },
             platform: { type: 'string' },
             fallbackUrl: { type: 'string', format: 'uri' },
             referrer: { type: 'string', format: 'uri' },
+            title: { type: 'string' },
+            snippet: { type: 'string' },
           },
         },
       },
     },
-    // now request.body will be typed correctly for the handler:
     async (
       request: FastifyRequest<{
         Body: {
@@ -41,6 +51,8 @@ export default async function validateFallbackDownloadRoute(
           platform: string;
           fallbackUrl: string;
           referrer: string;
+          title: string;
+          snippet: string;
         };
       }>,
       reply: FastifyReply,
