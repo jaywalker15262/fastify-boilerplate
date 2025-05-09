@@ -3,8 +3,8 @@ import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 
 type Query = { softwareName: string };
 
-export default async function findOfficialSiteRoute(server: FastifyInstance) {
-  server.get(
+export default async function findOfficialSiteRoute(fastify: FastifyInstance) {
+  fastify.get(
     '/',
     {
       config: {
