@@ -1,5 +1,5 @@
 import env from '@/config/env';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { OpenAI } from 'openai';
 
