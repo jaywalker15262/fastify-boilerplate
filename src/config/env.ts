@@ -27,6 +27,8 @@ const schema = Type.Object({
   JWT_EXPIRES_IN: Type.String({ default: '1h' }),
   JWT_REFRESH_EXPIRES_IN: Type.String({ default: '7d' }),
   APP_URL: Type.String(),
+  OPENAI_API_KEY: Type.String(),
+  SERPAI_API_KEY: Type.String(),
   RECAPTCHA_SECRET_KEY: Type.String(),
 });
 
@@ -56,5 +58,7 @@ export default {
     refreshExpiresIn: env.JWT_REFRESH_EXPIRES_IN,
   },
   appUrl: env.APP_URL,
+  openaiApiKey: env.OPENAI_API_KEY,
+  serpaiApiKey: env.SERPAI_API_KEY,
   recaptchaSecretKey: env.RECAPTCHA_SECRET_KEY,
 };

@@ -8564,6 +8564,7 @@ __metadata:
     fastify-plugin: "npm:5.0.1"
     fastify-print-routes: "npm:^4.1.0"
     globals: "npm:16.0.0"
+    google-search-results-nodejs: "npm:^2.1.0"
     graphql: "npm:16.10.0"
     helmet: "npm:8.1.0"
     husky: "npm:9.1.7"
@@ -9364,6 +9365,13 @@ __metadata:
   version: 3.6.1
   resolution: "google-protobuf@npm:3.6.1"
   checksum: 10c0/e0396c11b01804aebcb17b6147fc6dfaba119d46ae603095aaafac457df8672bf13ea43e8b159189a5f68367b27bd76bf3fa023186838278c60aea332d95076c
+  languageName: node
+  linkType: hard
+
+"google-search-results-nodejs@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "google-search-results-nodejs@npm:2.1.0"
+  checksum: 10c0/1fe22cc1a149014864c03689879d21a37b61c0ced6f921086b5cb60d398d9ab2fbf039bd06ff873fb7ae98a4d14db42b457106bb9a5548bffbd57e239086d538
   languageName: node
   linkType: hard
 

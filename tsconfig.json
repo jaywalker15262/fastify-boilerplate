@@ -13,5 +13,10 @@
     "noImplicitAny": false,
     "noStrictGenericChecks": false
   },
-  "include": ["src", "tests", "src/declarations.d.ts"]
+  "include": [
+    "src",
+    "tests",
+    "src/declarations.d.ts",
+    "src/type/google-search-results-nodejs.d"
+  ]
 }

@@ -1,4 +1,4 @@
-import { generateStack } from './generate-stack.helper';
+import { generateStack } from './generate-stack.handler';
 import { FastifyInstance } from 'fastify';
 
 interface GenerateStackRequest {
