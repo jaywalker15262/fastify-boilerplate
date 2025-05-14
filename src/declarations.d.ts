@@ -37,6 +37,11 @@ declare module 'fastify' {
       id: string;
       email: string;
     };
+
+    /** Set by fastify-awilix */
+    container: {
+      cradle: Dependencies;
+    };
   }
 }
 

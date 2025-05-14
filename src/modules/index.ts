@@ -1,3 +1,4 @@
+import { OfficialSiteCache } from './serp/find-official-site/cache.entity';
 import { CommandBus, EventBus } from '@/shared/cqrs/bus.types';
 import PostgresDB from '@/shared/db/postgres';
 import { RepositoryPort } from '@/shared/db/repository.port';
@@ -17,7 +18,13 @@ declare global {
     queryBus: CommandBus;
     commandBus: CommandBus;
     eventBus: EventBus;
+    officialSiteCacheRepo: OfficialSiteCacheRepo;
   }
+
+  export type OfficialSiteCacheRepo = {
+    findById(id: string): Promise<OfficialSiteCache | null>;
+    save(entity: OfficialSiteCache): Promise<void>;
+  };
 }
 
 type SqlBaseProps = Omit<SqlRepositoryBaseProps<any, any>, 'logger' | 'db'>;

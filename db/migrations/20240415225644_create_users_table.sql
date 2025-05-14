@@ -23,7 +23,7 @@ CREATE TABLE email_verification_tokens (
 );
 
 -- migrate:down
-DROP TABLE IF EXISTS email_verification_tokens;
 DROP TABLE IF EXISTS "users";
+DROP TABLE IF EXISTS email_verification_tokens;
 
 

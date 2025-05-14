@@ -2,11 +2,8 @@ import env from '@/config/env';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { GoogleSearch } from 'google-search-results-nodejs';
 
-interface SiteRequest
-  extends FastifyRequest<{ Querystring: { softwareName: string } }> {}
-
 export const findOfficialSiteHandler = async (
-  request: SiteRequest,
+  request: FastifyRequest<{ Querystring: { softwareName: string } }>,
   reply: FastifyReply,
 ) => {
   const { softwareName } = request.query;
@@ -17,6 +14,18 @@ export const findOfficialSiteHandler = async (
       .send({ url: 'Not found', reason: 'Invalid software name' });
   }
 
+  const repo = request.container.cradle.officialSiteCacheRepo;
+
+  // Check cache
+  const cached = await repo.findById(softwareName);
+  if (cached) {
+    return reply.code(200).send({
+      url: cached.url,
+      cached: true,
+    });
+  }
+
+  // Fallback to SerpAPI
   const search = new GoogleSearch(env.serpaiApiKey);
 
   try {
@@ -32,14 +41,10 @@ export const findOfficialSiteHandler = async (
         }) => {
           const results = data.organic_results || [];
 
-          // console.log('[findOfficialSiteHandler] SERP Results:')
-          // results.forEach(r => console.log(`- ${r.title} | ${r.link}`))
-
           const targetHost = softwareName
             .toLowerCase()
             .match(/[a-z0-9-]+\.[a-z]{2,}/)?.[0];
 
-          // Type-guard filter so TS knows r.link is string
           const withLinks = results.filter(
             (r): r is { link: string; title?: string; snippet?: string } =>
               typeof r.link === 'string' && r.link.startsWith('https'),
@@ -61,25 +66,31 @@ export const findOfficialSiteHandler = async (
             })
             .sort((a, b) => b.score - a.score);
 
-          // console.log('[findOfficialSiteHandler] Scored results:')
-          // scored.forEach(r => console.log(`- ${r.url} (score: ${r.score})`))
-
           const best = scored.find((r) => r.score >= 10);
           if (best) {
-            // console.log(`[findOfficialSiteHandler] Picked: ${best.url} (score: ${best.score})`)
             resolve(best.url);
           } else if (scored[0]) {
-            // console.warn(`[findOfficialSiteHandler] Fallback to low-score result: ${scored[0].url}`)
             resolve(scored[0].url);
           } else {
-            // console.warn(`[findOfficialSiteHandler] No valid results for "${softwareName}"`)
             resolve('Not found');
           }
         },
       );
     });
 
-    return reply.code(200).send({ url: result });
+    // Save to cache
+    if (result !== 'Not found') {
+      await repo.save({
+        softwareName,
+        url: result,
+        fetchedAt: new Date(),
+      });
+    }
+
+    return reply.code(200).send({
+      url: result,
+      cached: false,
+    });
   } catch (error: any) {
     request.log.error(`SerpAPI error: ${error.message}`);
     return reply.code(500).send({ url: 'Not found', error: error.message });
