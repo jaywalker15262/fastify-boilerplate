@@ -1,5 +1,6 @@
+import { OfficialSiteCache } from './cache.entity';
 import env from '@/config/env';
-import { Cradle } from '@/server/di/cradle';
+import { RepositoryPort } from '@/shared/db/repository.port';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { GoogleSearch } from 'google-search-results-nodejs';
 
@@ -15,12 +16,13 @@ export const findOfficialSiteHandler = async (
       .send({ url: 'Not found', reason: 'Invalid software name' });
   }
 
-  const repo = request.diScope.resolve<Cradle['officialSiteCacheRepo']>(
-    'officialSiteCacheRepo',
-  );
+  const repo =
+    request.diScope.resolve<RepositoryPort<OfficialSiteCache>>(
+      'cacheRepository',
+    );
 
   // Check cache
-  const cached = await repo.findById(softwareName);
+  const cached = await repo.findOneById(softwareName);
   if (cached) {
     return reply.code(200).send({
       url: cached.url,
@@ -83,7 +85,7 @@ export const findOfficialSiteHandler = async (
 
     // Save to cache
     if (result !== 'Not found') {
-      await repo.save({
+      await repo.insert({
         softwareName,
         url: result,
         fetchedAt: new Date(),
