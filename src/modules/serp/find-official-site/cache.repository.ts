@@ -2,7 +2,7 @@ import { OfficialSiteCache } from './cache.entity';
 import { cacheMapper } from './cache.mapper';
 import { RepositoryPort } from '@/shared/db/repository.port';
 
-export function cacheRepository(deps: {
+export default function makeCacheRepository(deps: {
   repositoryBase: <T>(opts: {
     tableName: string;
     mapper: any;

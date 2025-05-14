@@ -61,7 +61,7 @@ export async function di(fastify: FastifyInstance) {
   const required = ['cacheRepository'];
   for (const dep of required) {
     if (!diContainer.registrations[dep]) {
-      console.warn(`[DI] ⚠️  Missing dependency: ${dep}`);
+      console.warn(`[DI] ⚠️ Missing dependency: ${dep}`);
     }
   }
 }
