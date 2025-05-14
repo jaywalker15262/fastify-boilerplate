@@ -1,5 +1,5 @@
 import { OfficialSiteCache } from './cache.entity';
-import { cacheMapper } from './cache.mapper';
+import cacheMapper from './cache.mapper';
 import { CacheRepository } from './cache.repository.port';
 import { RepositoryPort } from '@/shared/db/repository.port';
 import { Static, Type } from '@sinclair/typebox';
@@ -27,11 +27,12 @@ export default function makeCacheRepository({
   repositoryBase,
 }: Deps): CacheRepository {
   const tableName = 'official_sites';
+  const mapper = cacheMapper();
 
   return {
     ...repositoryBase<OfficialSiteCache>({
       tableName,
-      mapper: cacheMapper,
+      mapper,
     }),
 
     async findOneBySoftwareName(
@@ -43,7 +44,7 @@ export default function makeCacheRepository({
          WHERE software_name = ${name} 
          LIMIT 1
       `;
-      return row ? cacheMapper.toDomain(row) : undefined;
+      return row ? mapper.toDomain(row) : undefined;
     },
   };
 }
