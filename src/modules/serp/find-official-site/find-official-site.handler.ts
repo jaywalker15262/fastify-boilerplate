@@ -3,8 +3,6 @@ import { Cradle } from '@/server/di/cradle';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { GoogleSearch } from 'google-search-results-nodejs';
 
-// assuming that's the file
-
 export const findOfficialSiteHandler = async (
   request: FastifyRequest<{ Querystring: { softwareName: string } }>,
   reply: FastifyReply,
