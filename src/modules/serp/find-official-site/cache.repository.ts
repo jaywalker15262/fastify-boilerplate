@@ -14,7 +14,7 @@ export type CacheModel = Static<typeof cacheSchema>;
 
 type Deps = {
   db: any; // your postgres client instance (the same you use in other repos)
-  cacheMapper: typeof cacheMapper;
+  cacheMapper: ReturnType<typeof cacheMapper>;
   repositoryBase: <T>(opts: {
     tableName: string;
     mapper: any;
@@ -27,7 +27,7 @@ export default function makeCacheRepository({
   repositoryBase,
 }: Deps): CacheRepository {
   const tableName = 'official_sites';
-  const mapper = cacheMapper();
+  const mapper = cacheMapper;
 
   return {
     ...repositoryBase<OfficialSiteCache>({
