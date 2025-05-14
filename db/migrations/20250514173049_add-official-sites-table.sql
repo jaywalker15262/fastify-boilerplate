@@ -1,4 +1,6 @@
 -- migrate:up
+CREATE EXTENSION IF NOT EXISTS citext;
+
 CREATE TABLE official_sites (
   software_name CITEXT PRIMARY KEY,
   url           TEXT    NOT NULL,
