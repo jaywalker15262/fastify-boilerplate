@@ -1,6 +1,9 @@
 import env from '@/config/env';
+import { Cradle } from '@/server/di/cradle';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { GoogleSearch } from 'google-search-results-nodejs';
+
+// assuming that's the file
 
 export const findOfficialSiteHandler = async (
   request: FastifyRequest<{ Querystring: { softwareName: string } }>,
@@ -14,7 +17,9 @@ export const findOfficialSiteHandler = async (
       .send({ url: 'Not found', reason: 'Invalid software name' });
   }
 
-  const repo = request.container.cradle.officialSiteCacheRepo;
+  const repo = request.diScope.resolve<Cradle['officialSiteCacheRepo']>(
+    'officialSiteCacheRepo',
+  );
 
   // Check cache
   const cached = await repo.findById(softwareName);
